@@ -19,7 +19,6 @@ import id.eightstudio.danboru.sqliterelation.Provider.Todo;
 /**
  * Created by danboru on 4/27/17.
  */
-
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     // Logcat tag
@@ -69,10 +68,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             + KEY_TODO_ID + " INTEGER," + KEY_TAG_ID + " INTEGER,"
             + KEY_CREATED_AT + " DATETIME" + ")";
 
+    //Constructor
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //onCreate Database
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -82,6 +83,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TODO_TAG);
     }
 
+    //onUpgrade Database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on upgrade drop older tables
@@ -93,7 +95,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
+    //Membuat table todo secara manual (selain menggunakan fungsi onCreate)
     public long createToDo(Todo todo, long[] tag_ids) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -114,6 +116,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
+    //get some data di dalam table todo
     public Todo getTodo(long todo_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -136,6 +139,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
+    //getSemua data yang ada di dalam table todo
     public List<Todo> getAllToDos() {
         List<Todo> todos = new ArrayList<Todo>();
         String selectQuery = "SELECT  * FROM " + TABLE_TODO;
@@ -161,8 +165,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return todos;
     }
 
-
-
+    //get all data di table todo berdasarkan tag
     public List<Todo> getAllToDosByTag(String tag_name) {
         List<Todo> todos = new ArrayList<Todo>();
 
@@ -193,6 +196,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return todos;
     }
 
+    //Menghitung jumlah data yang ada di dalam table todo
     public int getToDoCount() {
         String countQuery = "SELECT  * FROM " + TABLE_TODO;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -205,6 +209,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return count;
     }
 
+    //updata single data yang ada di dalam table todo
     public int updateToDo(Todo todo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -218,7 +223,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-
+    //Delete some data yang ada di dalam table todo
     public void deleteToDo(long tado_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_TODO, KEY_ID + " = ?",
@@ -239,7 +244,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         return tag_id;
     }
-
 
 
     public List<Tag> getAllTags() {
@@ -266,7 +270,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
 
-
     public int updateTag(Tag tag) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -277,7 +280,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return db.update(TABLE_TAG, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(tag.getId()) });
     }
-
 
 
     public void deleteTag(Tag tag, boolean should_delete_all_tag_todos) {
@@ -301,8 +303,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(tag.getId()) });
     }
 
-
-
+    //membuat table relasi todo dan tag
     public long createTodoTag(long todo_id, long tag_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 

@@ -13,6 +13,11 @@ public class Todo {
     public Todo() {
     }
 
+    public Todo(String note, int status) {
+        this.note = note;
+        this.status = status;
+    }
+
     public Todo(int id, String note, int status, String created_at) {
         this.id = id;
         this.note = note;

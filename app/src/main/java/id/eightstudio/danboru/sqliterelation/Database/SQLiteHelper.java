@@ -193,7 +193,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return todos;
     }
 
+    public int getToDoCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_TODO;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
 
+        int count = cursor.getCount();
+        cursor.close();
+
+        // return count
+        return count;
+    }
 
     public int updateToDo(Todo todo) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -334,6 +344,5 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         Date date = new Date();
         return dateFormat.format(date);
     }
-
 
 }

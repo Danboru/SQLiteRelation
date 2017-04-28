@@ -3,9 +3,13 @@ package id.eightstudio.danboru.sqliterelation;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import id.eightstudio.danboru.sqliterelation.Adapter.AdapterTodo;
 import id.eightstudio.danboru.sqliterelation.Database.SQLiteHelper;
 import id.eightstudio.danboru.sqliterelation.Provider.Tag;
 import id.eightstudio.danboru.sqliterelation.Provider.Todo;
@@ -14,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Database Helper
     SQLiteHelper db;
+    ArrayList listData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new SQLiteHelper(getApplicationContext());
+
 
         // Creating tags
         Tag tag1 = new Tag("Shopping");
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Todo todo9 = new Todo("Collect money from John", 0);
 
         Todo todo10 = new Todo("Post new Article", 0);
+
         Todo todo11 = new Todo("Take database backup", 0);
 
         // Inserting todos in db
@@ -128,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
         // Don't forget to close database connection
         db.closeDB();
 
-    }
+        //Tester set listview
+        listData = (ArrayList) db.getAllToDos();
 
+        ListView listView = (ListView) findViewById(R.id.lv_utama);
+        ListAdapter adapter = new AdapterTodo(MainActivity.this , listData);
+
+        listView.setAdapter(adapter);
+
+
+    }
 }

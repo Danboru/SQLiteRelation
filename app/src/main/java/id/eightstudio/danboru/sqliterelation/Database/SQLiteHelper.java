@@ -140,8 +140,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
 
     //getSemua data yang ada di dalam table todo
-    public List<Todo> getAllToDos() {
-        List<Todo> todos = new ArrayList<Todo>();
+    public ArrayList<Todo> getAllToDos() {
+        ArrayList<Todo> todos = new ArrayList<Todo>();
         String selectQuery = "SELECT  * FROM " + TABLE_TODO;
 
         Log.e(LOG, selectQuery);
